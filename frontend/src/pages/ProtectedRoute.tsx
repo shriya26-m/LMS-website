@@ -12,6 +12,8 @@ export default function ProtectedRoute({ children, allowedRole }: Props) {
 
   if (!token) {
     return <Navigate to="/" />;
+  }else{
+    return <>{children}</>;
   }
 
   if (allowedRole && role !== allowedRole) {

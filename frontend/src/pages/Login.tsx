@@ -29,12 +29,12 @@ export default function Login() {
       localStorage.setItem("role", res.data.role);
 
       alert("Login successful");
-
-      if (res.data.role === "instructor") {
-        navigate("/instructor-dashboard");
-      } else {
-        navigate("/student-dashboard");
-      }
+       navigate("/dashboard");
+      // if (res.data.role === "instructor") {
+      //   navigate("/instructor-dashboard");
+      // } else {
+      //   navigate("/student-dashboard");
+      // }
 
     } catch (err: any) {
       alert(err.response?.data?.message || "Login failed");
