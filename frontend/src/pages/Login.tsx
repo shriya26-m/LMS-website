@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 interface LoginForm {
   email: string;
@@ -12,6 +12,7 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -21,23 +22,27 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const res = await axios.post("http://localhost:3001/login", form);
 
+      // Store user data in localStorage
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      alert("Login successful");
-       navigate("/dashboard");
-      // if (res.data.role === "instructor") {
-      //   navigate("/instructor-dashboard");
-      // } else {
-      //   navigate("/student-dashboard");
-      // }
+      // Redirect based on role
+      if (res.data.role === "instructor") {
+        navigate("/instructor-dashboard");
+      } else {
+        navigate("/student-dashboard");
+      }
 
     } catch (err: any) {
       alert(err.response?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,8 +56,9 @@ export default function Login() {
             type="email"
             name="email"
             placeholder="Email"
+            value={form.email}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
 
@@ -60,24 +66,26 @@ export default function Login() {
             type="password"
             name="password"
             placeholder="Password"
+            value={form.password}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
 
-          <button className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
-            Login
+          <button 
+            type="submit" 
+            disabled={loading}
+            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed"
+          >
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
         <p className="text-sm text-center mt-4">
           Don't have an account?{" "}
-          <span
-            onClick={() => navigate("/signup")}
-            className="text-blue-600 cursor-pointer"
-          >
+          <Link to="/signup" className="text-blue-600 hover:underline">
             Signup
-          </span>
+          </Link>
         </p>
       </div>
     </div>

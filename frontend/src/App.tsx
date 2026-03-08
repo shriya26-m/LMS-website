@@ -4,44 +4,39 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import PublicRoute from "./pages/PublicRoute";
-//import ProtectedRoute from "./pages/ProtectedRoute";
-
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<PublicRoute><Login /></PublicRoute>} />
+        <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+        <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
 
-        // bublic routes
+        {/* Protected Routes */}
         <Route
-          path="/"
-          element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          }
-        />
-
-        <Route
-          path="/signup"
-          element={
-            <PublicRoute>
-              <Signup />
-            </PublicRoute>
-          }
-        />
-
-
-        {/* <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<Signup />} /> */}
-
-        {/* <Route path="/protected" element={<ProtectedRoute />} /> */}
-        
-
-          <Route
           path="/dashboard"
           element={
             <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/student-dashboard"
+          element={
+            <ProtectedRoute allowedRole="student">
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/instructor-dashboard"
+          element={
+            <ProtectedRoute allowedRole="instructor">
               <Dashboard />
             </ProtectedRoute>
           }
@@ -52,7 +47,3 @@ function App() {
 }
 
 export default App;
-
-
-
-

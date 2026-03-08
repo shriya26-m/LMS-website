@@ -7,10 +7,15 @@ interface Props {
 
 export default function PublicRoute({ children }: Props) {
   const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
-  // ✅ If already logged in → go to dashboard
   if (token) {
-    return <Navigate to="/dashboard" replace />;
+    // Redirect to appropriate dashboard based on role
+    if (role === "instructor") {
+      return <Navigate to="/instructor-dashboard" replace />;
+    } else {
+      return <Navigate to="/student-dashboard" replace />;
+    }
   }
 
   return <>{children}</>;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 interface SignupForm {
   name: string;
@@ -16,6 +16,7 @@ export default function Signup() {
     password: "",
     role: "student",
   });
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -27,6 +28,7 @@ export default function Signup() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const res = await axios.post("http://localhost:3001/signup", form);
@@ -34,6 +36,8 @@ export default function Signup() {
       navigate("/");
     } catch (err: any) {
       alert(err.response?.data?.message || "Signup failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -47,8 +51,9 @@ export default function Signup() {
             type="text"
             name="name"
             placeholder="Full Name"
+            value={form.name}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
 
@@ -56,8 +61,9 @@ export default function Signup() {
             type="email"
             name="email"
             placeholder="Email"
+            value={form.email}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
 
@@ -65,33 +71,36 @@ export default function Signup() {
             type="password"
             name="password"
             placeholder="Password"
+            value={form.password}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
 
           <select
             name="role"
+            value={form.role}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="student">Student</option>
             <option value="instructor">Instructor</option>
           </select>
 
-          <button className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
-            Signup
+          <button 
+            type="submit" 
+            disabled={loading}
+            className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed"
+          >
+            {loading ? "Creating account..." : "Signup"}
           </button>
         </form>
 
         <p className="text-sm text-center mt-4">
           Already have an account?{" "}
-          <span
-            onClick={() => navigate("/")}
-            className="text-blue-600 cursor-pointer"
-          >
+          <Link to="/" className="text-blue-600 hover:underline">
             Login
-          </span>
+          </Link>
         </p>
       </div>
     </div>
