@@ -12,9 +12,9 @@ export default function PublicRoute({ children }: Props) {
   if (token) {
     // Redirect to appropriate dashboard based on role
     if (role === "instructor") {
-      return <Navigate to="/instructor-dashboard" replace />;
+      return <Navigate to="/instructorDashboard" replace />;
     } else {
-      return <Navigate to="/student-dashboard" replace />;
+      return <Navigate to="/studentDashboard" replace />;
     }
   }
 

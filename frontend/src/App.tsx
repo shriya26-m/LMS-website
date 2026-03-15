@@ -4,15 +4,38 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import PublicRoute from "./pages/PublicRoute";
+import Courses from "./pages/Courses";
+//import Courses from "./pages/Courses";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         {/* Public Routes */}
-        <Route path="/" element={<PublicRoute><Login /></PublicRoute>} />
-        <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-        <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <PublicRoute>
+              <Signup />
+            </PublicRoute>
+          }
+        />
 
         {/* Protected Routes */}
         <Route
@@ -23,9 +46,18 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
-        <Route
-          path="/student-dashboard"
+
+        <Route 
+        path="/courses"
+        element={
+          <ProtectedRoute>
+            <Courses />
+          </ProtectedRoute>
+        } />
+         
+
+        {/* <Route
+          path="/studentDashboard"
           element={
             <ProtectedRoute allowedRole="student">
               <Dashboard />
@@ -34,13 +66,13 @@ function App() {
         />
         
         <Route
-          path="/instructor-dashboard"
+          path="/instructorDashboard"
           element={
             <ProtectedRoute allowedRole="instructor">
               <Dashboard />
             </ProtectedRoute>
           }
-        />
+        /> */}
       </Routes>
     </BrowserRouter>
   );
