@@ -1,0 +1,24 @@
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+(node:45849) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[32minfo[39m: MongoDB Connected: 127.0.0.1 {"timestamp":"2026-03-15 12:02:01"}
+[32minfo[39m: 🚀 Server running on port 5000 in development mode {"timestamp":"2026-03-15 12:02:01"}
+[32minfo[39m: 📚 API Docs: http://localhost:5000/api-docs {"timestamp":"2026-03-15 12:02:01"}
+(node:45849) [MONGOOSE] Warning: mongoose: Duplicate schema index on {"email":1} for model "User". This is often due to declaring an index using both "index: true" and "schema.index()". Please remove the duplicate index definition.
+[34mdebug[39m: POST /api/v1/auth/logout {"timestamp":"2026-03-15 12:02:11"}
+[34mdebug[39m: POST /api/v1/auth/refresh {"timestamp":"2026-03-15 12:02:11"}
+[34mdebug[39m: POST /api/v1/auth/logout {"timestamp":"2026-03-15 12:02:11"}
+[34mdebug[39m: POST /api/v1/courses/1/enroll {"timestamp":"2026-03-15 12:02:14"}
+[34mdebug[39m: POST /api/v1/auth/login {"timestamp":"2026-03-15 12:02:29"}
+[34mdebug[39m: GET /api/v1/courses/my-courses {"timestamp":"2026-03-15 12:02:30"}
+[34mdebug[39m: GET /api/v1/courses/my-courses {"timestamp":"2026-03-15 12:02:30"}
+[34mdebug[39m: GET /api/v1/courses/my-courses {"timestamp":"2026-03-15 12:02:34"}
+[34mdebug[39m: GET /api/v1/courses/my-courses {"timestamp":"2026-03-15 12:02:34"}
+[34mdebug[39m: GET /api/v1/courses/my-courses {"timestamp":"2026-03-15 12:02:36"}
+[34mdebug[39m: GET /api/v1/courses/my-courses {"timestamp":"2026-03-15 12:02:36"}
+[34mdebug[39m: GET /api/v1/courses/my-courses {"timestamp":"2026-03-15 12:02:38"}
+[34mdebug[39m: GET /api/v1/courses/my-courses {"timestamp":"2026-03-15 12:02:38"}
+[34mdebug[39m: GET /api/v1/courses/my-courses {"timestamp":"2026-03-15 12:02:49"}
+[34mdebug[39m: GET /api/v1/courses/my-courses {"timestamp":"2026-03-15 12:02:49"}
+[34mdebug[39m: GET /api/v1/courses/my-courses {"timestamp":"2026-03-15 12:03:15"}
+[34mdebug[39m: GET /api/v1/courses/my-courses {"timestamp":"2026-03-15 12:03:15"}
