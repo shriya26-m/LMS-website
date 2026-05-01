@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { Search, Star, Users, BookOpen, Play } from 'lucide-react';
 import Layout from '../../components/layout/Layout';
 import { coursesService } from '../../services/courses.service';
 import type { Course } from '../../types';
 import toast from 'react-hot-toast';
+
+import { useNavigate, useParams } from "react-router-dom";
+
+const navigate = useNavigate();
+const { id } = useParams();
 
 const LEVELS = ['all', 'beginner', 'intermediate', 'advanced'];
 
@@ -79,7 +84,7 @@ export default function BrowseCourses() {
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                             <input type="text" placeholder="Search courses..." value={search} onChange={e => { setSearch(e.target.value); setPage(1); }}
                                 className="w-full pl-11 pr-4 py-2.5 border border-gray-200 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm" />
-                        </div>
+        zzz                </div>
                         <select value={category} onChange={e => { setCategory(e.target.value); setPage(1); }}
                             className="px-4 py-2.5 border border-gray-200 dark:border-slate-600 dark:bg-slate-700 dark:text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
                             <option value="">All Categories</option>
