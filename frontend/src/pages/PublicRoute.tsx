@@ -1,21 +1,13 @@
-import { Navigate } from "react-router-dom";
-import type { ReactNode } from "react";
+import { Navigate } from 'react-router-dom';
+import { useAuthStore } from '../store/authStore';
 
-interface Props {
-  children: ReactNode;
-}
+export default function PublicRoute({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated, user } = useAuthStore();
 
-export default function PublicRoute({ children }: Props) {
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
-
-  if (token) {
-    // Redirect to appropriate dashboard based on role
-    if (role === "instructor") {
-      return <Navigate to="/instructorDashboard" replace />;
-    } else {
-      return <Navigate to="/studentDashboard" replace />;
-    }
+  if (isAuthenticated && user) {
+    if (user.role === 'admin') return <Navigate to="/admin" replace />;
+    if (user.role === 'instructor') return <Navigate to="/instructor" replace />;
+    return <Navigate to="/student" replace />;
   }
 
   return <>{children}</>;

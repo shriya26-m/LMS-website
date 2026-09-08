@@ -1,70 +1,123 @@
-// src/types/index.ts
+// User types
+export type UserRole = 'admin' | 'instructor' | 'student';
+export type UserStatus = 'active' | 'inactive' | 'pending';
+
 export interface User {
-  user_id: string;
+  id: string;
+  _id: string;
   name: string;
   email: string;
-  role: 'student' | 'instructor' | 'admin';
-  created_at: string;
-  status: 'active' | 'inactive' | 'suspended';
+  role: UserRole;
+  status: UserStatus;
+  avatar?: string;
+  bio?: string;
+  isEmailVerified: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
+export interface AuthUser {
+  id: string;
+  email: string;
+  role: UserRole;
+  name?: string;
+}
+
+// Course types
 export interface Course {
-  course_id: string;
+  _id: string;
   title: string;
   description: string;
+  thumbnail?: string;
+  instructorId: User | string;
   category: string;
-  instructor_id: string;
-  instructor_name?: string;
+  level: 'beginner' | 'intermediate' | 'advanced';
+  price: number;
+  isPublished: boolean;
+  enrolledStudents: string[];
+  totalLessons: number;
+  rating: number;
+  ratingCount: number;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
 }
 
-export interface Enrollment {
-  student_id: string;
-  course_id: string;
-  enrollment_date: string;
-  progress_percentage: number;
-  completion_status: 'not_started' | 'in_progress' | 'completed';
-  course?: Course;
-}
-
-export interface Assignment {
-  assignment_id: string;
-  course_id: string;
+// Lesson types
+export interface Lesson {
+  _id: string;
+  courseId: string;
   title: string;
-  due_date: string;
-  total_marks: number;
-  course_title?: string;
+  description?: string;
+  videoUrl?: string;
+  pdfUrl?: string;
+  duration?: number;
+  order: number;
+  isFree: boolean;
+  createdAt: string;
 }
 
+// Assignment types
+export interface Assignment {
+  _id: string;
+  courseId: string;
+  title: string;
+  description: string;
+  deadline: string;
+  maxScore: number;
+  createdAt: string;
+}
+
+// Submission types
 export interface Submission {
-  submission_id: string;
-  assignment_id: string;
-  student_id: string;
-  submission_date: string;
-  marks_obtained: number | null;
-  feedback: string | null;
-  assignment?: Assignment;
+  _id: string;
+  assignmentId: Assignment | string;
+  studentId: User | string;
+  fileUrl?: string;
+  textContent?: string;
+  grade?: number;
+  feedback?: string;
+  status: 'submitted' | 'graded';
+  submittedAt: string;
+  gradedAt?: string;
 }
 
+// Progress types
+export interface Progress {
+  _id: string;
+  studentId: string;
+  courseId: Course | string;
+  completedLessons: string[];
+  progressPercent: number;
+  isCompleted: boolean;
+  completedAt?: string;
+  updatedAt: string;
+}
+
+// Certificate types
 export interface Certificate {
-  certificate_id: string;
-  student_id: string;
-  course_id: string;
-  issue_date: string;
-  certificate_url: string;
-  course_title?: string;
+  _id: string;
+  studentId: User | string;
+  courseId: Course | string;
+  issueDate: string;
+  certificateCode: string;
+  certificateUrl?: string;
 }
 
-export interface LoginCredentials {
-  email: string;
-  password: string;
+// API response types
+export interface ApiResponse<T = unknown> {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: T;
 }
 
-export interface SignupData extends LoginCredentials {
-  name: string;
-  role: 'student' | 'instructor';
-}
-
-export interface AuthResponse {
-  token: string;
-  user: User;
+export interface PaginatedResponse<T> {
+  data: T[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+  hasNext: boolean;
+  hasPrev: boolean;
 }

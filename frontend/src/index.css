@@ -1,7 +1,27 @@
 @import "tailwindcss";
 
+/* Force dark mode globally */
+:root {
+  color-scheme: dark;
+}
 
+/* All form fields use white text in dark mode */
+.dark input,
+.dark textarea,
+.dark select {
+  color: #151414;
+}
 
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #94a3b8; /* slate-400 */
+}
+
+/* Native select options need dark background */
+.dark select option {
+  background-color: #1e293b; /* slate-800 */
+  color: #ffffff;
+}
 
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

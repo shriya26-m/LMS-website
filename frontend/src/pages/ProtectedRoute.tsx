@@ -1,30 +1,25 @@
-import { Navigate } from "react-router-dom";
-import type { ReactNode } from "react";
+import { Navigate } from 'react-router-dom';
+import { useAuthStore } from '../store/authStore';
+import type { UserRole } from '../types';
 
-interface Props {
-  children: ReactNode;
-  allowedRole?: string;
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+  allowedRoles?: UserRole[];
 }
 
-export default function ProtectedRoute({ children, allowedRole }: Props) {
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
+export default function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) {
+  const { isAuthenticated, user } = useAuthStore();
 
-  // Check if user is authenticated
-  if (!token) {
-    return <Navigate to="/" replace />;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
   }
 
-  // Check if user has required role (if specified)
-  if (allowedRole && role !== allowedRole) {
-    // Redirect to appropriate dashboard based on role
-    if (role === "instructor") {
-      return <Navigate to="/instructorDashboard" replace />;
-    } else {
-      return <Navigate to="/studentDashboard" replace />;
-    }
+  if (allowedRoles && user && !allowedRoles.includes(user.role)) {
+    // Redirect to appropriate dashboard
+    if (user.role === 'admin') return <Navigate to="/admin" replace />;
+    if (user.role === 'instructor') return <Navigate to="/instructor" replace />;
+    return <Navigate to="/student" replace />;
   }
 
-  // User is authenticated and has required role
   return <>{children}</>;
 }

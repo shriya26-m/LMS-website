@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6-jammy
+    container_name: lms-mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: secretpassword
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  redis:
+    image: redis:7-alpine
+    container_name: lms-redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: ./backend
+    container_name: lms-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGO_URI=mongodb://admin:secretpassword@mongodb:27017/lms?authSource=admin
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=learnhub-jwt-secret-key-2024-change-in-prod
+      - JWT_EXPIRES_IN=15m
+      - JWT_REFRESH_SECRET=learnhub-refresh-secret-key-2024-change-in-prod
+      - JWT_REFRESH_EXPIRES_IN=7d
+      - CLIENT_URL=http://localhost:80
+    depends_on:
+      - mongodb
+      - redis
+    volumes:
+      - backend_uploads:/app/uploads
+      - backend_logs:/app/logs
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: lms-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongodb_data:
+  backend_uploads:
+  backend_logs:
